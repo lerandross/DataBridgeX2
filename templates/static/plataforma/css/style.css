@@ -1,0 +1,49 @@
+/* Estilo do corpo do documento */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* Estilo do menu lateral */
+.sidebar {
+  background-color: #333;
+  color: #fff;
+  width: 250px;
+  padding: 20px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-list li {
+  margin-bottom: 10px;
+}
+
+.menu-list li a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+}
+
+.menu-list li a:hover {
+  background-color: #555;
+  padding: 5px;
+}
+
+/* Estilo do conteúdo principal */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+p {
+  color: #666;
+}
