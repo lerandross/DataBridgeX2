@@ -36,188 +36,124 @@ DataBridgeX2/
 ```
 
 
-# Guia de Commits Padronizados no Projeto
+# **Guia de Commits Padronizados**
 
-Este guia explica como estruturar e organizar commits de forma clara, padronizada e compreensível para todos os envolvidos no projeto. Ele segue o padrão **Conventional Commits**, uma abordagem amplamente utilizada para melhorar a legibilidade e a rastreabilidade no versionamento de código.
-
-### Resumo
-| **Tipo**      | **Quando Usar em SQL**                                   | **Exemplo**                                              |
-|---------------|---------------------------------------------------------|----------------------------------------------------------|
-| `feat`        | Nova funcionalidade ou tabela/view/procedure            | `feat(schema): cria tabela de pedidos`                  |
-| `fix`         | Correção de erros em tabelas, consultas ou procedures    | `fix(queries): corrige join que retornava valores errados` |
-| `chore`       | Reorganização ou ajustes não funcionais                  | `chore(sql): reorganiza diretório de scripts`           |
-| `docs`        | Documentação ou comentários em SQL                      | `docs(schema): adiciona comentários nas tabelas`        |
-| `refactor`    | Alteração na estrutura sem modificar comportamento       | `refactor(schema): altera estrutura de índices`         |
-| `test`        | Criação ou ajuste de testes SQL                         | `test(procedures): adiciona testes para validar cálculo`|
-| `perf`        | Melhoria de desempenho                                  | `perf(queries): otimiza consulta com índices`           |
-| `style`       | Alterações cosméticas (formatação, alinhamento, etc.)    | `style(queries): ajusta formatação de consulta SQL`     |
-| `ci`          | Scripts SQL em pipelines de CI/CD                       | `ci: adiciona execução de migrações SQL no pipeline`    |
+Este documento explica como utilizar o comando `make commit` para criar mensagens de commit padronizadas e consistentes no projeto. O objetivo é manter o histórico de alterações organizado e facilitar o entendimento do trabalho realizado.
 
 ---
 
-## **Por Que Usar Commits Padronizados?**
+## **Como Fazer Commits**
 
-1. **Clareza**: Facilita a compreensão do que foi alterado em cada commit.
-2. **Organização**: Ajuda a categorizar mudanças (novas funcionalidades, correções, melhorias, etc.).
-3. **Automação**: Permite a integração com ferramentas de CI/CD para gerar changelogs ou versões automaticamente.
-4. **Colaboração**: Facilita para outros desenvolvedores entenderem o histórico do projeto.
+### **Passo a Passo**
+
+1. **Execute o comando para iniciar o processo de commit**:
+   ```bash
+   make commit
+   ```
+
+2. **Tipos Disponíveis**:  
+   Escolha o **tipo de alteração** que melhor descreve sua modificação.  
+   - O script exibirá os tipos válidos:
+     ```
+     Tipos disponíveis: feat fix chore docs style refactor test perf ci
+     ```
+
+3. **Escopos Permitidos**:  
+   Escolha o **escopo** que melhor representa a parte do projeto afetada.  
+   - O script exibirá os escopos válidos:
+     ```
+     Escopos permitidos: extract transform load schema migrations queries procedures views triggers config tests docs ci
+     ```
+
+4. **Informe os Detalhes do Commit**:  
+   O processo interativo solicitará os seguintes inputs:
+   - **Tipo de commit** (ex.: `feat`, `fix`, etc.).
+   - **Escopo** do commit (ex.: `schema`, `queries`, etc.).  
+     Caso você pressione Enter, será usado o escopo padrão: `geral`.
+   - **Mensagem curta** para descrever brevemente a alteração.
+   - **Descrição detalhada** (opcional) para fornecer mais informações.
+
+---
+
+## **Estrutura da Mensagem de Commit**
+
+As mensagens de commit seguirão o padrão:
+
+```
+<tipo>(<escopo>): mensagem curta
+
+[Descrição detalhada opcional]
+```
+
+### **Componentes**
+1. **Tipo**: Define o tipo de alteração (ex.: `feat`, `fix`, etc.).
+2. **Escopo**: Indica a parte do projeto afetada (ex.: `schema`, `queries`, etc.).
+3. **Mensagem Curta**: Resumo da alteração realizada.
+4. **Descrição Detalhada** (opcional): Explica em mais detalhes o que foi alterado e por quê.
 
 ---
 
 ## **Tipos de Commit**
 
-### **1. feat (Feature)**
-- Representa a adição de uma **nova funcionalidade** ao projeto.
-- **Exemplo**:
-  ```
-  feat(transform): adiciona suporte para normalização de JSON
-  ```
-
-### **2. fix**
-- Indica uma **correção de bug** no código.
-- **Exemplo**:
-  ```
-  fix(extract): corrige erro na extração de arquivos CSV
-  ```
-
-### **3. chore**
-- Usado para tarefas que **não alteram o código da aplicação**, como atualizações de dependências ou configurações de build.
-- **Exemplo**:
-  ```
-  chore: atualiza dependências do Poetry
-  ```
-
-### **4. docs**
-- Relacionado a **mudanças na documentação**.
-- **Exemplo**:
-  ```
-  docs: adiciona instruções de configuração no README
-  ```
-
-### **5. style**
-- Indica alterações que **não afetam a lógica do código**, como ajustes de formatação, identação ou remoção de espaços.
-- **Exemplo**:
-  ```
-  style: ajusta identação no script de transformação
-  ```
-
-### **6. refactor**
-- Usado para **refatorações** de código que **não alteram o comportamento existente**, mas melhoram a legibilidade ou eficiência.
-- **Exemplo**:
-  ```
-  refactor(load): simplifica lógica de carregamento de dados
-  ```
-
-### **7. test**
-- Relacionado a **adição ou ajuste de testes** automatizados.
-- **Exemplo**:
-  ```
-  test(extract): adiciona teste para verificar extração de arquivos JSON
-  ```
-
-### **8. perf**
-- Indica uma alteração que **melhora o desempenho** do código.
-- **Exemplo**:
-  ```
-  perf(transform): otimiza a função de normalização
-  ```
-
-### **9. ci**
-- Refere-se a mudanças em **pipelines de integração contínua** ou scripts de CI/CD.
-- **Exemplo**:
-  ```
-  ci: ajusta configuração do GitHub Actions para rodar testes
-  ```
+| Tipo        | Quando Usar                                                           | Exemplo                                              |
+|-------------|-----------------------------------------------------------------------|-----------------------------------------------------|
+| `feat`      | Quando adicionar uma nova funcionalidade.                             | `feat(schema): cria tabela de clientes`            |
+| `fix`       | Quando corrigir um bug ou erro.                                       | `fix(queries): corrige erro no join de pedidos`     |
+| `chore`     | Para tarefas gerais, como organização de arquivos ou atualizações.    | `chore(migrations): renomeia scripts para consistência` |
+| `docs`      | Quando alterar ou adicionar documentação.                             | `docs: adiciona seção sobre índices no README`      |
+| `style`     | Alterações de estilo (formatação, espaçamento, etc.).                 | `style(queries): ajusta formatação de consultas`    |
+| `refactor`  | Refatorações que não alteram o comportamento externo.                 | `refactor(load): melhora lógica de carregamento`    |
+| `test`      | Adição ou ajuste de testes automatizados.                             | `test(schema): adiciona teste para constraints`     |
+| `perf`      | Melhorias de performance.                                             | `perf(procedures): otimiza cálculo de saldos`       |
+| `ci`        | Alterações relacionadas a integração contínua ou pipelines.           | `ci: adiciona execução de testes no pipeline`       |
 
 ---
 
-## **Como Fazer Commits?**
+## **Escopos Permitidos**
 
-### **Passo a Passo**
-1. **Adicionar os Arquivos Modificados**:
-   ```bash
-   git add <arquivo>  # Adiciona um arquivo específico
-   git add .          # Adiciona todos os arquivos modificados
-   ```
-
-2. **Criar o Commit**:
-   Use o comando abaixo para criar um commit padronizado:
-   ```bash
-   make commit
-   ```
-   O processo interativo solicitará:
-   - **Tipo do commit** (ex.: feat, fix, chore).
-   - **Escopo** (opcional, ex.: extract, transform).
-   - **Mensagem curta** (obrigatória).
-   - **Descrição detalhada** (opcional).
-
-3. **Enviar para o Repositório Remoto**:
-   ```bash
-   git push origin <branch>
-   ```
+| Escopo         | Descrição                                                           |
+|----------------|---------------------------------------------------------------------|
+| `extract`      | Alterações no processo de extração de dados.                       |
+| `transform`    | Alterações no processo de transformação de dados.                  |
+| `load`         | Alterações no carregamento de dados no destino final.              |
+| `schema`       | Alterações nas definições de tabelas, índices ou constraints.      |
+| `migrations`   | Scripts de migração do banco de dados.                             |
+| `queries`      | Scripts de consultas SQL (`SELECT`, `JOIN`, etc.).                 |
+| `procedures`   | Alterações ou criação de stored procedures.                        |
+| `views`        | Criação ou alteração de views no banco.                            |
+| `triggers`     | Alterações ou criação de triggers no banco.                        |
+| `config`       | Alterações em arquivos de configuração do projeto.                 |
+| `tests`        | Alterações ou adição de testes relacionados a dados ou SQL.        |
+| `docs`         | Alterações na documentação.                                        |
+| `ci`           | Alterações em pipelines ou scripts de integração contínua.         |
 
 ---
 
-## **Como Entender os Commits Feitos?**
+## **Exemplos Práticos**
 
-### **Visualizando o Histórico de Commits**
-- Para ver todos os commits realizados:
-  ```bash
-  git log --oneline
-  ```
-  Exemplo de saída:
-  ```
-  a1b2c3d feat(extract): adiciona suporte para JSON
-  d4e5f6 fix(transform): corrige erro na função normalize
-  g7h8i9 docs: atualiza documentação do README
-  ```
+### **1. Adicionar uma Nova Tabela**
+**Entrada no terminal**:
+```bash
+make commit
+```
 
-### **Exibindo Commits com Mais Detalhes**
-- Para ver detalhes de cada commit:
-  ```bash
-  git log
-  ```
-  Exemplo de saída:
-  ```
-  commit a1b2c3d
-  Author: Leandro
-  Date:   Fri Jan 24 12:00:00 2025 -0300
+**Inputs fornecidos**:
+```
+Tipos disponíveis: feat fix chore docs style refactor test perf ci
+Escopos permitidos: extract transform load schema migrations queries procedures views triggers config tests docs ci
+Digite o tipo (ex: feat, fix): feat
+Digite o escopo (ou pressione Enter para 'geral'): schema
+Digite a mensagem curta do commit: cria tabela de usuários
+Deseja adicionar uma descrição detalhada (s/n)? s
+Digite a descrição detalhada (pressione Ctrl+D para terminar):
+Tabela criada para armazenar dados dos usuários, incluindo nome, email e senha.
+```
 
-      feat(extract): adiciona suporte para JSON
+**Mensagem de Commit**:
+```
+feat(schema): cria tabela de usuários
 
-      Adicionado suporte à extração de arquivos JSON, permitindo integração com novas fontes de dados.
-  ```
-
-### **Filtrando Commits por Tipo ou Autor**
-- Exibir commits de um tipo específico (ex.: `feat`):
-  ```bash
-  git log --grep="^feat"
-  ```
-- Exibir commits feitos por um autor específico:
-  ```bash
-  git log --author="Leandro"
-  ```
+Tabela criada para armazenar dados dos usuários, incluindo nome, email e senha.
+```
 
 ---
-
-## **Boas Práticas**
-1. **Mensagens Claras**:
-   - Escreva mensagens curtas e diretas.
-   - Use o idioma do projeto (Português ou Inglês) de forma consistente.
-
-2. **Commits Atômicos**:
-   - Faça commits pequenos e coesos. Cada commit deve tratar de uma única alteração.
-
-3. **Referencie Issues**:
-   - Sempre que possível, associe o commit a uma issue ou tarefa. Exemplo:
-     ```
-     fix(transform): corrige bug no normalizador de dados
-
-     Closes #42
-     ```
-
-4. **Revisão Antes do Commit**:
-   - Use `git diff` para revisar mudanças antes de fazer o commit:
-     ```bash
-     git diff
-     ```
