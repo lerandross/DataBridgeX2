@@ -1,11 +1,12 @@
 import pandas as pd
+from typing import Optional
 from sqlalchemy import create_engine
 import pymssql
 import os
 
 
 def salvar_dataframe_em_parquet(
-    query: str, nome_arquivo: str, credenciais: dict, nome_banco: str, tipo_banco: str
+    query: str, nome_arquivo: str, credenciais: dict, nome_banco: str, tipo_banco: str, path_file: Optional[str] = "data/raw/parquet"
 ):
     """
     Salva o resultado de uma query em um arquivo Parquet.
@@ -63,7 +64,7 @@ def salvar_dataframe_em_parquet(
             raise ValueError(f"Tipo de banco de dados '{tipo_banco}' não suportado.")
 
         # Construir o nome do arquivo
-        caminho_arquivo = f"data/raw/parquet/{nome_banco}.{nome_arquivo}.parquet"
+        caminho_arquivo = f"{path_file}/{nome_banco}.{nome_arquivo}.parquet"
 
         # Salvar o DataFrame em Parquet
         df.to_parquet(caminho_arquivo, index=False)

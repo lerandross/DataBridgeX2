@@ -1,0 +1,13 @@
+# Ignorar o diretório venv
+venv/
+
+# Ignorar outros arquivos desnecessários
+__pycache__/
+*.pyc
+*.pyo
+*.log
+.DS_Store
+
+# Ignorar dependências do sistema
+node_modules/
+__pypackages__/
