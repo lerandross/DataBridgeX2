@@ -1,6 +1,6 @@
 # Variáveis
 COMMIT_TYPES := feat fix chore docs style refactor test perf ci
-ALLOWED_SCOPES := extract transform load schema migrations queries procedures views triggers config tests docs ci
+ALLOWED_SCOPES := extract transform load schema migrations queries procedures views triggers config tests docs ci geral
 DEFAULT_SCOPE := geral
 
 # Regra para commits
