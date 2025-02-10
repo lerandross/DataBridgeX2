@@ -1,6 +1,145 @@
+# 📌 DataBridgeX2 - Script `main.py`
 
+Este script permite a extração de dados de **Google Sheets**, **bancos de dados SQL** e outras fontes definidas no arquivo de configuração. Ele suporta extrações individuais e em grupos, evitando processamento duplicado.
+
+## 🚀 **Como Usar**
+
+### **1️⃣ Executar todas as extrações**
+Caso queira executar **todas as extrações disponíveis**, basta rodar:
+
+```bash
+python main.py
+```
+
+Isso executará todas as extrações listadas no arquivo `config/extracoes.py`.
+
+---
+
+### **2️⃣ Executar extrações específicas com `-t`**
+Se quiser rodar apenas algumas extrações específicas, passe os índices das extrações desejadas usando o parâmetro `-t`:
+
+```bash
+python main.py -t 0 2 5
+```
+
+Isso executará as extrações nas posições `0`, `2` e `5` da lista `EXTRACOES` em `config/extracoes.py`.
+
+---
+
+### **3️⃣ Executar grupos de extrações com `-tab`**
+O script permite executar **grupos de tabelas** predefinidos no dicionário `RELATORIOS_EXT`. Isso evita a necessidade de especificar várias extrações manualmente.
+
+#### 🔹 **Exemplo do dicionário `RELATORIOS_EXT`:**
+```python
+RELATORIOS_EXT = {
+    1: [2, 7, 4],
+    2: [4, 7, 8],
+    4: [7, 9, 10]
+}
+```
+
+#### 🔹 **Executando um grupo de extrações**
+```bash
+python main.py -tab 1
+```
+Isso será equivalente a:
+```bash
+python main.py -t 2 7 4
+```
+
+#### 🔹 **Executando múltiplos grupos**
+Você pode passar várias chaves ao mesmo tempo, e o script eliminará repetições automaticamente:
+
+```bash
+python main.py -tab 1 2
+```
+Se `RELATORIOS_EXT[1] = [2, 7, 4]` e `RELATORIOS_EXT[2] = [4, 7, 8]`, então o comando acima será equivalente a:
+```bash
+python main.py -t 2 7 4 8
+```
+**(Note que `4` e `7` não serão repetidos)**
+
+---
+
+### **4️⃣ Misturar `-t` e `-tab`**
+Se quiser combinar tabelas específicas e grupos de extrações, pode usar os dois argumentos juntos:
+
+```bash
+python main.py -t 0 1 -tab 2 4
+```
+Isso executará:
+- As extrações nos índices `0` e `1`
+- As extrações associadas às chaves `2` e `4` no dicionário `RELATORIOS_EXT`
+- Sem duplicar extrações que aparecem mais de uma vez
+
+---
+
+## 📂 **Arquivos de Configuração**
+### **1️⃣ `config/extracoes.py`**
+Define todas as extrações individuais e os grupos (`RELATORIOS_EXT`):
+
+```python
+EXTRACOES = [
+    {"origem": "google_sheets", "nome_arquivo": "dados_google_sheets", "formato": "excel", "api_key": "config/.dw-teste-6ff1adb6399f.json", "spreadsheet_url": "https://docs.google.com/spreadsheets/d/18mk7e1V4ZZNbeiZ_i-1mTK8UGaSRK7YJvsyHijHASG0"},
+    {"origem": "sql", "nome_arquivo": "dados_vendas", "formato": "parquet", "query": "SELECT * FROM vendas", "credenciais": {"server": "meu_servidor", "user": "admin", "password": "1234"}, "nome_banco": "loja_db", "tipo_banco": "sqlserver"},
+    {"origem": "sql", "nome_arquivo": "dados_clientes", "formato": "parquet", "query": "SELECT * FROM clientes", "credenciais": {"host": "localhost", "port": "5432", "user": "admin", "password": "admin"}, "nome_banco": "clientes_db", "tipo_banco": "postgresql"},
+]
+
+RELATORIOS_EXT = {
+    1: [2, 7, 4],
+    2: [4, 7, 8],
+    4: [7, 9, 10]
+}
+```
+
+---
+
+## 📝 **Logs**
+O script grava logs de todas as execuções no arquivo:
+```
+data/logs/extracoes.log
+```
+Se houver falhas, elas serão registradas automaticamente.
+
+---
+
+## 🎯 **Exemplos de Uso**
+### ✅ **Executar todas as extrações**
+```bash
+python main.py
+```
+
+### ✅ **Executar extrações específicas**
+```bash
+python main.py -t 1 3 5
+```
+
+### ✅ **Executar um grupo de extrações**
+```bash
+python main.py -tab 1
+```
+
+### ✅ **Executar múltiplos grupos**
+```bash
+python main.py -tab 1 2 4
+```
+
+### ✅ **Combinar extrações específicas e grupos**
+```bash
+python main.py -t 0 5 -tab 2 3
+```
+
+
+---
+
+### 🛠 **Requisitos**
+- Python 3.12
+- poetry
+- Bibliotecas necessárias (instale com `poetry install` no diretório raiz)
+---
 
 # Estrutura do projeto
+
 ```
 DataBridgeX2/
 ├── Dockerfile          # Definição da imagem Docker
